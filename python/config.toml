@@ -1,0 +1,4 @@
+[influx2]
+url = "http://localhost:8086"
+org = "my-org"
+token = "my-token"
