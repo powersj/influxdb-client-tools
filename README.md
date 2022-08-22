@@ -5,7 +5,11 @@ client libraries.
 
 ## Client Libraries
 
-* `python`: specific to the [Python client library](https://github.com/influxdata/influxdb-client-python)
+Each language specific folder contains examples using the InfluxDB client
+library in that language:
+
+* `go`: [influxdb-client-go](https://github.com/influxdata/influxdb-client-go)
+* `python`: [influxdb-client-python](https://github.com/influxdata/influxdb-client-python)
 
 ## Helpers
 
