@@ -1,1 +1,8 @@
+# python
 venv
+
+# java
+java/*/.gradle
+java/*/build
+java/*/libs
+java/*/target

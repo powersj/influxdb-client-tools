@@ -1,3 +1,6 @@
 from(bucket: "my-bucket")
     |> range(start: -1d)
-    |> limit(n: 1000000)
+    |> filter(fn: (r) => r["_measurement"] == "bench")
+    |> group(columns: ["_field"])
+    |> aggregateWindow(every: 15m, fn: mean, createEmpty: false)
+    |> yield(name: "mean")
