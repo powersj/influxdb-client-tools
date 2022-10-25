@@ -1,0 +1,17 @@
+plugins { id "java" }
+repositories { mavenCentral() }
+dependencies {
+    implementation "com.influxdb:influxdb-client-java:6.4.0"
+    implementation "com.opencsv:opencsv:5.7.0"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "example.CSV2InfluxDB"
+    }
+
+    duplicatesStrategy = "exclude"
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
