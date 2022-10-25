@@ -1,0 +1,17 @@
+{
+    "location": {
+        "lat": "43.56704 N",
+        "lon": "116.24053 W",
+        "elev": 2822
+    },
+    "name": "KBOI",
+    "sensors": [
+        {"name": "temperature", "value": 48},
+        {"name": "dew_point", "value": 34},
+        {"name": "humidity", "value": 61},
+        {"name": "wind", "value": 9},
+        {"name": "direction", "value": "NW"},
+        {"name": "pressure", "value": 30.23}
+    ],
+    "updated": "25 Oct 12:05 PM MDT"
+}

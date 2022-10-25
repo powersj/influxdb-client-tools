@@ -74,11 +74,12 @@ def generate_data(index, num_metrics):
 def write_sync(config, bucket, index, metrics):
     """Write to InfluxDBv2 /api/v2/write synchronously."""
     exec_time = 0
+    body = "\n".join(metrics).encode('utf-8')
     with InfluxDBClient.from_config_file(config) as client:
         with client.write_api(write_options=SYNCHRONOUS) as writer:
             try:
                 start = time.perf_counter_ns()
-                writer.write(bucket=bucket, record=metrics)
+                writer.write(bucket=bucket, record=body)
                 end = time.perf_counter_ns()
 
                 exec_time = nano_to_milliseconds(end - start)
@@ -88,6 +89,23 @@ def write_sync(config, bucket, index, metrics):
 
     return exec_time
 
+
+def write_request(config, bucket, index, metrics):
+    """Write to InfluxDBv2 /api/v2/write via request."""
+    exec_time = 0
+    body = "\n".join(metrics)
+    with InfluxDBClient.from_config_file(config) as client:
+        try:
+            start = time.perf_counter_ns()
+            client.api_client.call_api('/api/v2/write', 'POST', body=body)
+            end = time.perf_counter_ns()
+
+            exec_time = nano_to_milliseconds(end - start)
+            LOG.debug(f"{index}: {exec_time}")
+        except InfluxDBError as e:
+            sys.exit("%s: %s" % (e.status, e.message))
+
+    return exec_time
 
 def setup_logging(debug):
     """Set up logging."""
@@ -106,7 +124,7 @@ def parse_args():
     parser.add_argument(
         "--method",
         required=True,
-        choices=["sync", "async", "batch"],
+        choices=["sync", "request", "async", "batch"],
         help="method to write against /api/v2/write",
     )
     parser.add_argument(
@@ -225,8 +243,10 @@ def main():
 
         if args.method == "sync":
             timedeltas.append(write_sync(args.config, args.bucket, index, data))
+        elif args.method == "request":
+            timedeltas.append(write_request(args.config, args.bucket, index, data))
         elif args.method == "async":
-            sys.exit("method 'async' not implimented")
+            sys.exit("method 'batch' not implimetned")
         elif args.method == "batch":
             sys.exit("method 'batch' not implimetned")
 
