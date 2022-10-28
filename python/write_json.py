@@ -13,8 +13,8 @@ with open("../data/weather.json", "r") as json_file:
 
     point.tag("station", data["name"])
     point.time(parser.parse(data["updated"]))
-    for sensor in data["sensors"]:
-        point.field(sensor["name"], sensor["value"])
+    for key, value in data["sensors"].items():
+        point.field(key, value)
 
 with InfluxDBClient.from_config_file("config.toml") as client:
     with client.write_api(write_options=SYNCHRONOUS) as writer:

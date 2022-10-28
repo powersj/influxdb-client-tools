@@ -5,13 +5,13 @@
         "elev": 2822
     },
     "name": "KBOI",
-    "sensors": [
-        {"name": "temperature", "value": 48},
-        {"name": "dew_point", "value": 34},
-        {"name": "humidity", "value": 61},
-        {"name": "wind", "value": 9},
-        {"name": "direction", "value": "NW"},
-        {"name": "pressure", "value": 30.23}
-    ],
-    "updated": "25 Oct 12:05 PM -0600"
+    "sensors": {
+        "temperature": 48,
+        "dew_point": 34,
+        "humidity": 61,
+        "wind": 9,
+        "direction": "NW",
+        "pressure": 30.23
+    },
+    "updated": "2022 25 Oct 12:05 PM -0600"
 }
